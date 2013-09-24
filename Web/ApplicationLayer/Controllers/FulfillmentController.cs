@@ -136,6 +136,11 @@ namespace ApplicationLayer.Controllers
             return (from v in data.Fulfillment_View where v.department == deptId where v.requested_quantity!=0 select v).ToList();
         }
 
+        public Fulfillment_View actionGetFulfillmentViewByDepartmentAndStationery(int deptId, int stationeryId)
+        {
+            return (from v in data.Fulfillment_View where v.department == deptId where v.requested_quantity != 0 where v.stationery == stationeryId select v).SingleOrDefault();
+        }
+
         public void actionUpdateQty(int deptId, int stationeryId, int originalQty, int editableQty)
         {
             oldRF = actionGetFulfillmentByDepartmentAndStationery(deptId, stationeryId);

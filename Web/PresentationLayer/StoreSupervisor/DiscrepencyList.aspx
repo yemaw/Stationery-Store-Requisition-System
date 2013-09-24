@@ -88,7 +88,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="content_title_container">
-        <asp:Label ID="ui_content_title_label" runat="server" Text="Reported Discrepencies" class="content_title"></asp:Label> 
+        <asp:Label ID="ui_content_title_label" runat="server" Text="Reported Discrepancies" class="content_title"></asp:Label> 
     </div>
     
     <asp:GridView  runat="server" ID="discrepancyListView" AutoGenerateColumns="False" GridLines="None"

@@ -25,7 +25,14 @@
     <script src="/assets/js/jquery.extensions.js" type="text/javascript"></script>
     <script src="/assets/js/json.js" type="text/javascript" ></script>
     <script src="/assets/js/global.js" type="text/javascript"></script>
-
+<style media="screen" type="text/css">
+        .noPrint{ display: block; }
+        .yesPrint{ display: block !important; }
+    </style> 
+    <style media="print" type="text/css">
+        .noPrint{ display: none; }
+        .yesPrint{ display: block !important; }
+    </style>
 
 <asp:ContentPlaceHolder ID="head" runat="server">
 </asp:ContentPlaceHolder>
@@ -34,10 +41,13 @@
 <body>
 <div id="container">
 
-<div id="header"><h1 style="padding:30px;">Logic University</h1></div>
+<div id="header" class="noPrint"><h1 style="padding:30px;">Logic University</h1></div>
 
-<div id="menu">
+<div id="menu" class="noPrint">
 	<a title="home" href="DiscrepencyList.aspx">Pending Descripencies</a>&nbsp;&nbsp; |&nbsp;&nbsp; 
+    <a title="home" href="ReOrderReport.aspx">Reorders Report</a>&nbsp;&nbsp; |&nbsp;&nbsp; 
+    <a title="home" href="TrendAnalysis.aspx">Trends Analysis</a>&nbsp;&nbsp; |&nbsp;&nbsp; 
+    <a title="home" href="ClerkList.aspx">Clerk List</a>&nbsp;&nbsp; |&nbsp;&nbsp; 
 	<a title="link one" href="AccountEdit.aspx">Edit Account</a>&nbsp;&nbsp; |&nbsp;&nbsp; 
 	<a title="link two" href="/Logout.aspx">Logout</a>
     </div>
@@ -64,7 +74,7 @@
 	</div>
 </div>
 
-<div id="footer">Design and Develped by Team 9 (NUS~ISS SA36)</div>
+<div id="footer" class="noPrint">Design and Develped by Team 9 (NUS~ISS SA36)</div>
 
 </div>
 <script type="text/javascript">

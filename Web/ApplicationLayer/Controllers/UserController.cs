@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ApplicationLayer.Utils;
+using ApplicationLayer;
+
 namespace ApplicationLayer.Controllers
 {
     public class UserController : MainController
@@ -39,6 +41,16 @@ namespace ApplicationLayer.Controllers
             {
                 user.user_type = 2;
                 data.SaveChanges();
+                //Notification
+                User target = data.Users.Where(o => o.id == user_id).SingleOrDefault();
+                String email_title = "Logic University Requisition System Departmet Role Delegation Information.";
+                String email_body = "<p>Hello " + target.firstname + " " + target.lastname + ",</p>" +
+                                          "<p>Your are assigned as delegated department head to approve and reject department stationery requisitions.</p>"+
+                                          "<br />Thank you,<br/> Logic University.<p>This is system generated mail. Please do not reply.</p>";
+                Helper.sendMail(target.email, "no-reply@logic-university.com", email_title, email_body);
+
+                new SMSController().sendSMS(user.phone_number, "Hello " + target.firstname + " " + target.lastname+ "\r\nYou are assigned as Delegated Head Role in Logic University Requistion System.");
+
                 return new Message(true, "Delegated");
             }
             else {
@@ -58,6 +70,17 @@ namespace ApplicationLayer.Controllers
             {
                 user.user_type = 1;
                 data.SaveChanges();
+
+                //Notification
+                User target = data.Users.Where(o => o.id == user_id).SingleOrDefault();
+                String email_title = "Logic University Requisition System Departmet Role Delegation Information.";
+                String email_body = "<p>Hello " + target.firstname + " " + target.lastname + ",</p>" +
+                                          "<p>Your are removed the role of delegated department head in Logic University Stationery Requisitions System.</p>" +
+                                          "<br />Thank you,<br/> Logic University.<p>This is system generated mail. Please do not reply.</p>";
+                Helper.sendMail(target.email, "no-reply@logic-university.com", email_title, email_body);
+
+                //new SMSController().sendSMS(user.phone_number, "Hello " + target.firstname + " " + target.lastname + "\r\nYou are removed from Delegated Head Role in Logic University Requistion System.");
+                
                 return new Message(true, "Removed.");
             }
             else
@@ -125,6 +148,8 @@ namespace ApplicationLayer.Controllers
                 return this.getNewDefaultMessageForException(e);
             }
         }
-
+        public List<UserView> actionGetClerks(){
+            return data.UserViews.Where(o => o.user_type == 4).ToList();    
+        }
     }
 }

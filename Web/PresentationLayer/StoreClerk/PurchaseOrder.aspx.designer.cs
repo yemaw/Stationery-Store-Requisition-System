@@ -31,13 +31,31 @@ namespace PresentationLayer.StoreClerk {
         protected global::System.Web.UI.WebControls.Label ui_to_label;
         
         /// <summary>
-        /// ui_to_textbox control.
+        /// ui_to_dropdown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ui_to_textbox;
+        protected global::System.Web.UI.WebControls.DropDownList ui_to_dropdown;
+        
+        /// <summary>
+        /// ui_sentmail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ui_sentmail;
+        
+        /// <summary>
+        /// ui_sentsms control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox ui_sentsms;
         
         /// <summary>
         /// ui_from_label control.

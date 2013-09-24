@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h4>
-        Welcome <asp:Label ID="ui_welcome_text" runat="server" Text="Label"></asp:Label>, howdy today?
+        Welcome <asp:Label ID="ui_welcome_text" runat="server" Text="Label"></asp:Label>.
     </h4>
 
     <table class="table">

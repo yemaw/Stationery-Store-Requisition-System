@@ -22,7 +22,7 @@ namespace ApplicationLayer.Controllers
 
         public List<StockTransaction> actionGetStockTransactionByStationeryId(int stationery) {
             
-            List<StockTransaction> transactions = data.StockTransactions.Where(o => o.stationery == stationery).ToList();
+            List<StockTransaction> transactions = data.StockTransactions.Where(o => o.stationery == stationery).OrderByDescending(o=> o.id).ToList();
             return transactions;
         }
     }

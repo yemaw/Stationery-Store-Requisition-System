@@ -245,7 +245,7 @@
                 // alert("inside success");
                 var jsonObj = $.parseJSON(msg.d);
                 for (var x = 0; x < jsonObj.length; x++) {
-                    var htmlRow = "<tr><td>" + (x + 1) + "</td><td>" + jsonObj[x].StrationeryName + "</td><td>" + jsonObj[x].Quantity + "</td><td>" + jsonObj[x].RequestedDate + "</td></tr";
+                    var htmlRow = "<tr><td>" + (x + 1) + "</td><td>" + jsonObj[x].StrationeryName + "</td><td>" + jsonObj[x].Quantity + "</td><td>" + jsonObj[x].RequestedDate + "</td><td>" + jsonObj[x].RejectReason + "</td></tr";
                     // alert("Reject:" + htmlRow);
                     $(htmlRow).appendTo("#rejectedTable tbody");
 
@@ -332,7 +332,8 @@
 
                    <!-- body ends -->
                    <!-- body -->
-          <!-- Modal -->
+         
+          <!-- Approve Modal start -->
 		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-header">
@@ -348,8 +349,9 @@
 				<button class="btn btn-primary" id="requisition">Request</button>
 			</div>
 		</div>
+        <!-- Approve  end -->
 
-       
+         
          <ul class="nav nav-tabs" id="myTab" style="width:100%;">
           <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>    
             <li ><a href="#approved" data-toggle="tab">Approved</a></li>
@@ -390,7 +392,7 @@
            </div><!-- distributed-->   
            <div class="tab-pane " id="rejected"> 
              <table id="rejectedTable" class="table table-hover">
-          <thead><tr><td>#</td><td>Stationary</td><td>Quantity</td><td>Requested Date</td></tr></thead>
+          <thead><tr><td>#</td><td>Stationary</td><td>Quantity</td><td>Req. Date</td><td>Remark</td></tr></thead>
           <tbody></tbody>
           </table>
            </div><!-- Rejected-->    

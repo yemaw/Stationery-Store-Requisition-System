@@ -37,6 +37,9 @@ namespace ApplicationLayer.Controllers
 
         public User actionGetUserByToken(String token) {
             OAuth oauth = data.OAuths.Where(a => a.access_token == token).SingleOrDefault();
+            if (oauth == null) {
+                return null;
+            }
             return data.Users.Where(o => o.id == (oauth.user_obj)).SingleOrDefault();
         }
 

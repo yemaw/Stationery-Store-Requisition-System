@@ -12,8 +12,24 @@ namespace PresentationLayer
 {
     public partial class login : System.Web.UI.Page
     {
+        private static string[] mobileDevices = new string[] {"iphone","ppc",
+                                                      "windows ce","blackberry",
+                                                      "opera mini","mobile","palm",
+                                                      "portable","opera mobi", "nexus" };
+
+        public static bool IsMobileDevice(string userAgent)
+        {
+            // TODO: null check
+            userAgent = userAgent.ToLower();
+            return mobileDevices.Any(x => userAgent.Contains(x));
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            //if (IsMobileDevice(Request.UserAgent)) {
+            //    Response.Redirect("~/m/");
+            //}
+
             if ((User)Session["user"] == null) {
                 return;
             }

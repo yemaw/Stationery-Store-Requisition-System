@@ -42,6 +42,9 @@ namespace ApplicationLayer.Controllers
             try
             {
                 Department department = data.Departments.Where(o => o.id == objIn.id).Single();
+
+                User cuser = data.Users.Where(o => o.id == department.department_head).SingleOrDefault();
+                cuser.user_type = 1;
                 //objIn.EntityKey = data.Departments.Where(o => o.id == objIn.id).Single().EntityKey;
                 department.code = objIn.code;
                 department.department_name = objIn.department_name;
@@ -55,6 +58,8 @@ namespace ApplicationLayer.Controllers
 
                 User user = data.Users.Where(o => o.id == department.department_head).SingleOrDefault();
                 user.user_type = 3;
+
+                
 
                 data.SaveChanges();
                 return this.getNewDefaultMessageForDBOperations(true);
@@ -101,7 +106,7 @@ namespace ApplicationLayer.Controllers
         }
 
         public List<User> actionGetUsersOfADepartment(int department_id) {
-            return data.Users.Where(o => (o.department == department_id && (o.user_type == 1 || o.user_type ==2))).ToList();
+            return data.Users.Where(o => (o.department == department_id && (o.user_type == 1 || o.user_type == 2 || o.user_type == 3))).ToList();
         }
 
         public List<CollectionPoint> actionGetAllCollectionPoint()

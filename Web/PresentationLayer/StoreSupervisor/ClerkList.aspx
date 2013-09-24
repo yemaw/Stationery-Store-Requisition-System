@@ -4,7 +4,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
     <div class="content_title_container">
-        <asp:Label ID="ui_content_title_label" runat="server" Text="Employee List" class="content_title"></asp:Label> 
+        <asp:Label ID="ui_content_title_label" runat="server" Text="Store Clerk List" class="content_title"></asp:Label> 
     </div>
 
     <asp:GridView ID="ui_user_gridview" runat="server" AutoGenerateColumns="False" 
@@ -24,14 +24,14 @@
                 SortExpression="firstname"></asp:BoundField>
             <asp:BoundField DataField="lastname" HeaderText="Last Name" 
                 SortExpression="lastname"></asp:BoundField>
-            <asp:BoundField DataField="type" HeaderText="User Type" 
-                SortExpression="type"></asp:BoundField>
+            <asp:BoundField DataField="phone_number" HeaderText="Phone Number" 
+                SortExpression="phone_number"></asp:BoundField>
             <asp:CommandField SelectText="Edit" ShowSelectButton="True"></asp:CommandField>
         </Columns>
     </asp:GridView>
     <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" 
-        SelectMethod="actionGetDepartmentSideUserViews" TypeName="PresentationLayer.StoreClerk.UserList">
+        SelectMethod="actionGetClerks" TypeName="PresentationLayer.StoreSupervisor.ClerkList">
     </asp:ObjectDataSource>
-    <asp:linkbutton ID="Linkbutton1" runat="server" onclick="CreateNew_Button_Click" class="btn btn-medium btn-primary">Create New</asp:linkbutton>
+    <asp:linkbutton ID="Linkbutton1" runat="server" onclick="CreateNew_Button_Click" class="btn btn-medium btn-success">Create New</asp:linkbutton>
 
 </asp:Content>

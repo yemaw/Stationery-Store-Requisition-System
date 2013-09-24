@@ -51,7 +51,7 @@ namespace PresentationLayer.DepartmentHead
             UserController userController = new UserController();
             User dUser = userController.actionGetUserByID(sUser.id);
 
-            
+
             RequisitionController requisitionController = new RequisitionController();
             JavaScriptSerializer js = new JavaScriptSerializer();
 
@@ -60,11 +60,12 @@ namespace PresentationLayer.DepartmentHead
             List<RequisitionView> requisitionDepartmentWise = requisitionController.actionGetPendingRequisitionViewsByDepartmentID(Convert.ToInt32(dUser.department));
             System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ requisitions by department wise:" + requisitionDepartmentWise.Count());
 
-             List<UserRequisition> userRequisitionsList = new List<UserRequisition>();
-            foreach (RequisitionView r in requisitionDepartmentWise) {
-               
- //System.Diagnostics.Debug.WriteLine(" Dept:" + r.department + "User id:" + r.user_id + " Name" + r.firstname + " Req Id:" + r.requisition_id + " Stationary Name" + r.stationery_name + " Quantity " + r.quantity);
-        
+            List<UserRequisition> userRequisitionsList = new List<UserRequisition>();
+            foreach (RequisitionView r in requisitionDepartmentWise)
+            {
+
+                //System.Diagnostics.Debug.WriteLine(" Dept:" + r.department + "User id:" + r.user_id + " Name" + r.firstname + " Req Id:" + r.requisition_id + " Stationary Name" + r.stationery_name + " Quantity " + r.quantity);
+
 
                 if (userRequisitionsList.Count == 0)
                 {
@@ -76,14 +77,16 @@ namespace PresentationLayer.DepartmentHead
                     requisition.ReqId = r.requisition_id;
                     requisition.Quantity = r.quantity;
                     requisition.StationaryName = r.stationery_name;
-                   // requisition.RequisitionDate = r.r
+                    // requisition.RequisitionDate = r.r
                     userRequisition.UserRequisitions.Add(requisition);
                     userRequisitionsList.Add(userRequisition);
                 }
-                else {
+                else
+                {
                     bool found = false;
                     //check if requisition from the same user is pending, if yes group the requisition based on that user id
-                    foreach(UserRequisition uR in userRequisitionsList){
+                    foreach (UserRequisition uR in userRequisitionsList)
+                    {
                         if (r.user_obj == uR.UserId)
                         {
                             found = true;
@@ -95,10 +98,11 @@ namespace PresentationLayer.DepartmentHead
                             uR.UserRequisitions.Add(requisition);
                             break;
                         }
-                        
+
                     }//foreach
                     //else simply add the userrequisition to the list, grouping not required
-                    if (!found) {
+                    if (!found)
+                    {
                         UserRequisition userRequisition = new UserRequisition();
                         userRequisition.EmployeeName = r.firstname + " " + r.lastname;
                         userRequisition.UserId = r.user_obj;
@@ -114,10 +118,10 @@ namespace PresentationLayer.DepartmentHead
                 }
 
 
-                  }
+            }
 
 
-             System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ loadAllPendingRequests:" + js.Serialize(userRequisitionsList));
+            System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ loadAllPendingRequests:" + js.Serialize(userRequisitionsList));
             return js.Serialize(userRequisitionsList);
         }//loadAllPendingRequests
 
@@ -137,7 +141,7 @@ namespace PresentationLayer.DepartmentHead
 
             RequisitionController requisitionController = new RequisitionController();
             JavaScriptSerializer js = new JavaScriptSerializer();
-            List<RequisitionView> requisitionDepartmentWise = requisitionController.actionGetApprovedRequisitionViewsByDepartmentID(Convert.ToInt32(dUser.department));          
+            List<RequisitionView> requisitionDepartmentWise = requisitionController.actionGetApprovedRequisitionViewsByDepartmentID(Convert.ToInt32(dUser.department));
             System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ requisitions by department wise:" + requisitionDepartmentWise.Count());
             List<UserRequisition> userRequisitionsList = new List<UserRequisition>();
             foreach (RequisitionView r in requisitionDepartmentWise)
@@ -274,7 +278,8 @@ namespace PresentationLayer.DepartmentHead
 
 
         [WebMethod]
-        public static void approveRequisitions(List<RequisitionID> jsonParam) {
+        public static void approveRequisitions(List<RequisitionID> jsonParam)
+        {
 
             User sUser = (User)HttpContext.Current.Session["user"];
             if (sUser == null)
@@ -286,21 +291,23 @@ namespace PresentationLayer.DepartmentHead
             User dUser = userController.actionGetUserByID(sUser.id);
 
             JavaScriptSerializer js = new JavaScriptSerializer();
-           // System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approveRequisitions:" + js.Serialize(jsonParam));
+            // System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approveRequisitions:" + js.Serialize(jsonParam));
             System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approveRequisitions:" + jsonParam.Count());
 
             //actionRequisitionStatusChangeToApproved(int requisition_id) 
             RequisitionController requisitionController = new RequisitionController();
 
-            foreach(RequisitionID  requisitionId in jsonParam ){
+            foreach (RequisitionID requisitionId in jsonParam)
+            {
                 System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ param:" + requisitionId.Id);
-               requisitionController.actionRequisitionStatusChangeToApproved(Convert.ToInt32(requisitionId.Id), dUser.id);
+                requisitionController.actionRequisitionStatusChangeToApproved(Convert.ToInt32(requisitionId.Id), dUser.id);
             }
         }//approveRequisitions
 
         [WebMethod]
-        public static void rejectRequisitions(List<RequisitionID> jsonParam)
+        public static void rejectRequisitions(List<RequisitionID> jsonParam, string reason)
         {
+            System.Diagnostics.Debug.WriteLine("REASON FOR REJECTION:" + reason);
             User sUser = (User)HttpContext.Current.Session["user"];
             if (sUser == null)
             {
@@ -309,15 +316,16 @@ namespace PresentationLayer.DepartmentHead
 
             JavaScriptSerializer js = new JavaScriptSerializer();
             // System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approveRequisitions:" + js.Serialize(jsonParam));
-          //  System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approveRequisitions:" + jsonParam.Count());
+            //  System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approveRequisitions:" + jsonParam.Count());
 
             //actionRequisitionStatusChangeToApproved(int requisition_id) 
             RequisitionController requisitionController = new RequisitionController();
 
             foreach (RequisitionID requisitionId in jsonParam)
             {
-                System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ param:" + requisitionId.Id);
-                requisitionController.actionRequisitionStatusChangeToRejected(Convert.ToInt32(requisitionId.Id));
+                // System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ param:" + requisitionId.Id);
+                // requisitionController.actionRequisitionStatusChangeToRejected(Convert.ToInt32(requisitionId.Id));
+                requisitionController.actionRequisitionStatusChangeToRejectedWithRemarkAndRejectedBy(Convert.ToInt32(requisitionId.Id), reason, sUser.id);
             }
         }//rejectRequisitions
 
@@ -367,15 +375,17 @@ namespace PresentationLayer.DepartmentHead
             private string employeeName;
             private List<Requisition> userRequisitions = new List<Requisition>();
 
-            public UserRequisition() { 
-            
+            public UserRequisition()
+            {
+
             }
             public UserRequisition(string employeeName, List<Requisition> userRequisitions)
             {
                 this.employeeName = employeeName;
                 this.userRequisitions = userRequisitions;
             }
-            public int UserId {
+            public int UserId
+            {
                 get { return userId; }
                 set { userId = value; }
             }

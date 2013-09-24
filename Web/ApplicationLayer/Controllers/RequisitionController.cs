@@ -17,6 +17,22 @@ namespace ApplicationLayer.Controllers
             try
             {
                 data.Requisitions.AddObject(objIn);
+
+                Stationery stationery = data.Stationeries.Where(o => o.id == objIn.stationery).SingleOrDefault();
+                User employee = data.Users.Where(o=> o.id == objIn.user_obj).SingleOrDefault();
+                Department dept = data.Departments.Where(o=> o.id == objIn.department).SingleOrDefault();
+                User head = data.Users.Where(o=> o.id == dept.department_head).SingleOrDefault();
+
+                String email_title = "Stationery Requesting from " + employee.firstname + " " + employee.lastname;
+                String email_body       = "<p>Hello " + head.firstname + " " + head.lastname + ",</p>" +
+                                          "<p>The following item is requested from " + employee.firstname + " " + employee.lastname + ".</p>" +
+                                          "<p><b>Stationery Name : " + stationery.stationery_name + "<br />" +
+                                          "Quantity : " + objIn.quantity + " " + stationery.unit_of_measure+ "</b></p>" +
+                                          "<p>Please click the following link to login to your account and approve.<br /> " +
+                                          Configs.APP_URL_ROOT+
+                                          "<br />Thank you,<br/> Logic University.<p>This is system generated mail. Please do not reply.</p>";
+                Helper.sendMail(head.email, "no-reply@logic-university.com", email_title, email_body);
+
                 return this.getNewDefaultMessageForDBOperations(data.SaveChanges() == 1);
             }
             catch (Exception e)
@@ -33,6 +49,23 @@ namespace ApplicationLayer.Controllers
                 requisition.status = 1;
                 requisition.user_approved_by = user_id;
                 data.Requisitions.ApplyCurrentValues(requisition);
+
+
+                Stationery stationery = data.Stationeries.Where(o => o.id == requisition.stationery).SingleOrDefault();
+                User employee = data.Users.Where(o => o.id == requisition.user_obj).SingleOrDefault();
+                Department dept = data.Departments.Where(o => o.id == requisition.department).SingleOrDefault();
+                User user_approve = data.Users.Where(o => o.id == requisition.user_approved_by).SingleOrDefault();
+
+
+                String email_title = "Your requested stationery is approved.";
+                String email_body = "<p>Hello " + employee.firstname + " " + employee.lastname + ",</p>" +
+                                          "<p>The following item your requested is approved by " + user_approve.firstname + " " + user_approve.lastname + ".</p>" +
+                                          "<p><b>Stationery Name : " + stationery.stationery_name + "<br />" +
+                                          "Quantity : " + requisition.quantity + " " + stationery.unit_of_measure + "</b></p>" +
+                                          "<p>We will distribute your request shortly.</p>" +
+                                          "<br />Thank you,<br/> Logic University.<p>This is system generated mail. Please do not reply.</p>";
+                Helper.sendMail(employee.email, "no-reply@logic-university.com", email_title, email_body);
+
                 return this.getNewDefaultMessageForDBOperations(data.SaveChanges() == 1);
             }
             catch (Exception e)
@@ -47,6 +80,54 @@ namespace ApplicationLayer.Controllers
             {
                 Requisition requisition = data.Requisitions.Where(o => (o.id == requisition_id)).Single();
                 requisition.status = 2;
+                data.Requisitions.ApplyCurrentValues(requisition);
+
+                Stationery stationery = data.Stationeries.Where(o => o.id == requisition.stationery).SingleOrDefault();
+                User employee = data.Users.Where(o => o.id == requisition.user_obj).SingleOrDefault();
+                Department dept = data.Departments.Where(o => o.id == requisition.department).SingleOrDefault();
+                User approve_usr = data.Users.Where(o => o.id == requisition.user_approved_by).SingleOrDefault();
+
+                String email_title = "Your requested stationery is rejected.";
+                String email_body = "<p>Hello " + approve_usr.firstname + " " + approve_usr.lastname + ",</p>" +
+                                          "<p>The following item your requested is rejected by " + approve_usr.firstname + " " + approve_usr.lastname + ".</p>" +
+                                          "<p><b>Stationery Name : " + stationery.stationery_name + "<br />" +
+                                          "Quantity : " + requisition.quantity + " " + stationery.unit_of_measure + "</b></p>" +
+                                          "<p>The reason is - ." + requisition.reject_remark + "</p>" +
+                                          "<br />Thank you,<br/> Logic University.<p>This is system generated mail. Please do not reply.</p>";
+                Helper.sendMail(employee.email, "no-reply@logic-university.com", email_title, email_body);
+                
+                return this.getNewDefaultMessageForDBOperations(data.SaveChanges() == 1);
+            }
+            catch (Exception e)
+            {
+                return this.getNewDefaultMessageForException(e);
+            }
+        }
+
+        public Message actionRequisitionStatusChangeToRejectedWithRemark(int requisition_id, String remark)
+        {
+            try
+            {
+                Requisition requisition = data.Requisitions.Where(o => (o.id == requisition_id)).Single();
+                requisition.status = 2;
+                requisition.reject_remark = remark;
+                data.Requisitions.ApplyCurrentValues(requisition);
+                return this.getNewDefaultMessageForDBOperations(data.SaveChanges() == 1);
+            }
+            catch (Exception e)
+            {
+                return this.getNewDefaultMessageForException(e);
+            }
+        }
+
+        public Message actionRequisitionStatusChangeToRejectedWithRemarkAndRejectedBy(int requisition_id, String remark, int rejected_by)
+        {
+            try
+            {
+                Requisition requisition = data.Requisitions.Where(o => (o.id == requisition_id)).Single();
+                requisition.status = 2;
+                requisition.reject_remark = remark;
+                requisition.user_approved_by = rejected_by;
                 data.Requisitions.ApplyCurrentValues(requisition);
                 return this.getNewDefaultMessageForDBOperations(data.SaveChanges() == 1);
             }

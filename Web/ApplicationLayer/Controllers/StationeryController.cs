@@ -82,7 +82,7 @@ namespace ApplicationLayer.Controllers
             }
         }
 
-
+        
         /* Stationery Category */
         public List<StationeryCategory> actionGetStationeryCategories()
         {
@@ -268,5 +268,19 @@ namespace ApplicationLayer.Controllers
 
         }
         //ellen add end
+
+
+        public List<Supplier> actionGetSuppliersOfAStationery(int stationery_id)
+        {
+            Stationery stationery = data.Stationeries.Where(o => o.id == stationery_id).SingleOrDefault();
+            List<Supplier> suppliers = new List<Supplier>();
+            suppliers.Add(data.Suppliers.Where(o => o.id == stationery.first_supplier).SingleOrDefault());
+            suppliers.Add(data.Suppliers.Where(o => o.id == stationery.second_supplier).SingleOrDefault());
+            suppliers.Add(data.Suppliers.Where(o => o.id == stationery.third_supplier).SingleOrDefault());
+
+            return suppliers;
+
+        }
+
     }
 }

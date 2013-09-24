@@ -27,12 +27,12 @@ a:hover
 #container
 {
 	margin: 0px auto;
-	width: 760px;
+	width: 1024px;
 }
 
 #header
 {
-	width: 760px;
+	width: 1024px;
 	height: 120px;
 	border:1px solid #9F9F71;
 	background: #FAFAF8 url('../images/header.jpg');
@@ -41,7 +41,7 @@ a:hover
 
 #menu
 {
-	width: 740px;
+	//width: 1024px;
 	padding: 5px 10px;
 	border:1px solid #9F9F71;
 	margin-bottom: 10px;
@@ -57,7 +57,7 @@ a:hover
 
 #content
 {
-	width: 760px;
+	width: 1024px;
 	/*height: 350px;*/
 	line-height: 150%;
 	padding:20px 0 0 0;
@@ -76,7 +76,7 @@ a:hover
 .overflows
 {
 	overflow: auto;
-	width: 760px;
+	width: 1024px;
 	height: 350px; 
 }
 
@@ -87,7 +87,6 @@ a:hover
 
 #footer
 {
-	width: 740px;
 	padding: 5px 10px;
 	border:1px solid #9F9F71;
 	margin-top: 10px;

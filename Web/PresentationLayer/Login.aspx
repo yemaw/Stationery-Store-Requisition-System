@@ -86,7 +86,7 @@
             <%--<label class="control-label" for="password">Password</label>--%>
             
             <div class="controls">
-                <asp:TextBox ID="ui_password_textbox" runat="server" type="password" placeholder="Password" style="height:25px;width:280px;"></asp:TextBox>
+                <asp:TextBox ID="ui_password_textbox" runat="server" TextMode="Password" placeholder="Password" style="height:25px;width:280px;"></asp:TextBox>
             </div>
             </div>
  

@@ -89,10 +89,7 @@
             <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"> Reports &nbsp;<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Disbursement List</a></li>
-                    <li><a href="#">Report 2</a></li>
-                    <li><a href="#">Report 3</a></li>
-                    <li><a href="#">Report 4</a></li>
+                    <li><a href="#">Inventory Status Report</a></li>
                 </ul>
             </li>
         </ul>
@@ -134,10 +131,15 @@
                         Stock Card</a></li>
                     <li class="sidebar_item"><a href="/StoreClerk/InventoryStatus.aspx">
                     <img src="/assets/icons/icon_cmd.png" />
-                        Inventory</a></li>
-                    <li class="sidebar_item"><a href="/StoreClerk/OrderArrivalCreation.aspx">
-                    <img src="/assets/icons/icon_book.png" style="width:23px;height:25px;"/>
-                        Orders Arrival</a></li>
+                        Inventory Status</a></li>
+                    
+                    <li class="sidebar_item"><a href="/StoreClerk/PurchaseOrders.aspx">
+                    <img src="/assets/icons/icon_mail.png" />
+                        Orders</a></li>
+
+                    <li class="sidebar_item"><a href="/StoreClerk/StationeryAdjustment.aspx">
+                    <img src="/assets/icons/icon_gift.png" style="width:23px;height:25px;"/>
+                        Adjustment</a></li>
                     <li class="sidebar_item"><a href="/StoreClerk/StationeryList.aspx">
                     <img src="/assets/icons/icon_pencils.png" />
                         Stationeries</a></li>
@@ -166,12 +168,20 @@
     </div>
     </div>
 </div>
-<script type="text/javascript">
-    $("#content").height($(document).height()-100);
-    $("#sidebar").height($("#content").height());
-</script>
+
 <div class="credit">
     Designed & Developed by Team 9 (ISS~NUS SA36).
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        adjustHeight();
+    });
+    function adjustHeight() {
+        $("#content").height($(document).height() - 100);
+        $("#sidebar").height($("#content").height());
+    }
+    
+</script>
 </body>
 </html>

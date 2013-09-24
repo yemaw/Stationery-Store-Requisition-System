@@ -39,15 +39,23 @@
     <Reference Include="AjaxMin">
       <HintPath>..\packages\AjaxMin.4.97.4951.28483\lib\net40\AjaxMin.dll</HintPath>
     </Reference>
+    <Reference Include="ApplicationLayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ApplicationLayer\obj\Debug\ApplicationLayer.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
@@ -67,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="api\api.aspx" />
+    <Content Include="api\MRequisition.aspx" />
     <Content Include="assets\bootstrap\css\bootstrap-responsive.css" />
     <Content Include="assets\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="assets\bootstrap\css\bootstrap.css" />
@@ -210,6 +219,7 @@
     <Content Include="assets\ckeditor\skins\moono\images\lock.png" />
     <Content Include="assets\ckeditor\skins\moono\images\refresh.png" />
     <Content Include="assets\ckeditor\styles.js" />
+    <Content Include="assets\css\alert.bootstrap.min.css" />
     <Content Include="assets\css\crazy.bootstrap.css" />
     <Content Include="assets\css\department_emplyoee.css" />
     <Content Include="assets\css\department_head.css" />
@@ -220,6 +230,7 @@
     <Content Include="assets\css\readable.bootstrap.css" />
     <Content Include="assets\css\store_clerk.css" />
     <Content Include="assets\css\store_supervisor.css" />
+    <Content Include="assets\css\table.bootstrap.min.css" />
     <Content Include="assets\icons\icon_bag.png" />
     <Content Include="assets\icons\icon_board2.png" />
     <Content Include="assets\icons\icon_board3.png" />
@@ -534,21 +545,31 @@
     <Content Include="assets\jquery-ui\js\jquery-ui-1.10.3.custom.min.js" />
     <Content Include="assets\js\global.js" />
     <Content Include="assets\js\jquery-1.10.2.min.js" />
+    <Content Include="assets\js\jquery-migrate-1.2.1.js" />
     <Content Include="assets\js\jquery.cookie.js" />
     <Content Include="assets\js\jquery.extensions.js" />
     <Content Include="assets\js\json.js" />
+    <Content Include="DataFiller.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DepartmentEmployee\Default.aspx" />
     <Content Include="DepartmentEmployee\Requisition.aspx" />
     <Content Include="DepartmentHead\AccountEdit.aspx" />
-    <Content Include="DepartmentHead\Default.aspx" />
-    <Content Include="DepartmentHead\Preference.aspx" />
     <Content Include="DepartmentHead\ApproveRequisition.aspx" />
+    <Content Include="DepartmentHead\Default.aspx" />
+    <Content Include="DepartmentHead\HeadReport.aspx" />
+    <Content Include="DepartmentHead\Preference.aspx" />
     <Content Include="Global.asax" />
     <Content Include="assets\images\ajax-loader .gif" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="DepartmentEmployee\AccountEdit.aspx" />
+    <Content Include="m\Default.aspx" />
+    <Content Include="m\DepartmentEmployee\Default.aspx" />
+    <Content Include="m\Login.aspx" />
+    <Content Include="m\DepartmentEmployee\Requisition.aspx" />
+    <Content Include="m\DepartmentEmployee\Stationeries.aspx" />
+    <Content Include="m\LoginHandler.aspx" />
+    <Content Include="m\Logout.aspx" />
     <Content Include="StoreClerk\AccountEdit.aspx" />
     <Content Include="StoreClerk\AddNewDepartment.aspx" />
     <Content Include="StoreClerk\CategoryDetail.aspx" />
@@ -562,7 +583,8 @@
     <Content Include="StoreClerk\DiscrepancyMaintenance.aspx" />
     <Content Include="StoreClerk\InventoryStatus.aspx" />
     <Content Include="StoreClerk\MaintainDepartment.aspx" />
-    <Content Include="StoreClerk\OrderArrivalCreation.aspx" />
+    <Content Include="StoreClerk\PurchaseOrders.aspx" />
+    <Content Include="StoreClerk\StationeryAdjustment.aspx" />
     <Content Include="StoreClerk\PurchaseOrder.aspx" />
     <Content Include="StoreClerk\RequisitionFulfillment.aspx" />
     <Content Include="StoreClerk\RequisitionFulfillmentMaster.aspx" />
@@ -576,9 +598,12 @@
     <Content Include="StoreClerk\UserDetail.aspx" />
     <Content Include="StoreClerk\UserList.aspx" />
     <Content Include="StoreSupervisor\AccountEdit.aspx" />
+    <Content Include="StoreSupervisor\ClerkDetail.aspx" />
     <Content Include="StoreSupervisor\ClerkList.aspx" />
     <Content Include="StoreSupervisor\Default.aspx" />
     <Content Include="StoreSupervisor\DiscrepencyList.aspx" />
+    <Content Include="StoreSupervisor\ReOrderReport.aspx" />
+    <Content Include="StoreSupervisor\TrendAnalysis.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -596,6 +621,33 @@
     </Compile>
     <Compile Include="api\api.aspx.designer.cs">
       <DependentUpon>api.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api\MDepartmentEmployee.ashx.cs">
+      <DependentUpon>MDepartmentEmployee.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="api\MDepartmentHead.ashx.cs">
+      <DependentUpon>MDepartmentHead.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="api\mfulfillment.ashx.cs">
+      <DependentUpon>mfulfillment.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="api\MRequisition.aspx.cs">
+      <DependentUpon>MRequisition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="api\MRequisition.aspx.designer.cs">
+      <DependentUpon>MRequisition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="api\OAuthViewModel.cs" />
+    <Compile Include="api\store_supervisor.ashx.cs">
+      <DependentUpon>store_supervisor.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DataFiller.aspx.cs">
+      <DependentUpon>DataFiller.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DataFiller.aspx.designer.cs">
+      <DependentUpon>DataFiller.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -625,6 +677,13 @@
     <Compile Include="DepartmentHead\AccountEdit.aspx.designer.cs">
       <DependentUpon>AccountEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DepartmentHead\ApproveRequisition.aspx.cs">
+      <DependentUpon>ApproveRequisition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DepartmentHead\ApproveRequisition.aspx.designer.cs">
+      <DependentUpon>ApproveRequisition.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DepartmentHead\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -632,19 +691,19 @@
     <Compile Include="DepartmentHead\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DepartmentHead\HeadReport.aspx.cs">
+      <DependentUpon>HeadReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DepartmentHead\HeadReport.aspx.designer.cs">
+      <DependentUpon>HeadReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DepartmentHead\Preference.aspx.cs">
       <DependentUpon>Preference.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DepartmentHead\Preference.aspx.designer.cs">
       <DependentUpon>Preference.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="DepartmentHead\ApproveRequisition.aspx.cs">
-      <DependentUpon>ApproveRequisition.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="DepartmentHead\ApproveRequisition.aspx.designer.cs">
-      <DependentUpon>ApproveRequisition.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -661,6 +720,55 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\DepartmentEmployee\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\DepartmentEmployee\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\DepartmentEmployee\Requisition.aspx.cs">
+      <DependentUpon>Requisition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\DepartmentEmployee\Requisition.aspx.designer.cs">
+      <DependentUpon>Requisition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\DepartmentEmployee\Stationeries.aspx.cs">
+      <DependentUpon>Stationeries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\DepartmentEmployee\Stationeries.aspx.designer.cs">
+      <DependentUpon>Stationeries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\LoginHandler.aspx.cs">
+      <DependentUpon>LoginHandler.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\LoginHandler.aspx.designer.cs">
+      <DependentUpon>LoginHandler.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="m\Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="m\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -763,12 +871,19 @@
     <Compile Include="StoreClerk\MaintainDepartment.aspx.designer.cs">
       <DependentUpon>MaintainDepartment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="StoreClerk\OrderArrivalCreation.aspx.cs">
-      <DependentUpon>OrderArrivalCreation.aspx</DependentUpon>
+    <Compile Include="StoreClerk\PurchaseOrders.aspx.cs">
+      <DependentUpon>PurchaseOrders.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="StoreClerk\OrderArrivalCreation.aspx.designer.cs">
-      <DependentUpon>OrderArrivalCreation.aspx</DependentUpon>
+    <Compile Include="StoreClerk\PurchaseOrders.aspx.designer.cs">
+      <DependentUpon>PurchaseOrders.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StoreClerk\StationeryAdjustment.aspx.cs">
+      <DependentUpon>StationeryAdjustment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StoreClerk\StationeryAdjustment.aspx.designer.cs">
+      <DependentUpon>StationeryAdjustment.aspx</DependentUpon>
     </Compile>
     <Compile Include="StoreClerk\PurchaseOrder.aspx.cs">
       <DependentUpon>PurchaseOrder.aspx</DependentUpon>
@@ -793,6 +908,7 @@
     </Compile>
     <Compile Include="StoreClerk\RetrievalForm.aspx.cs">
       <DependentUpon>RetrievalForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="StoreClerk\RetrievalForm.aspx.designer.cs">
       <DependentUpon>RetrievalForm.aspx</DependentUpon>
@@ -860,6 +976,13 @@
     <Compile Include="StoreSupervisor\AccountEdit.aspx.designer.cs">
       <DependentUpon>AccountEdit.aspx</DependentUpon>
     </Compile>
+    <Compile Include="StoreSupervisor\ClerkDetail.aspx.cs">
+      <DependentUpon>ClerkDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StoreSupervisor\ClerkDetail.aspx.designer.cs">
+      <DependentUpon>ClerkDetail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StoreSupervisor\ClerkList.aspx.cs">
       <DependentUpon>ClerkList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -880,6 +1003,27 @@
     </Compile>
     <Compile Include="StoreSupervisor\DiscrepencyList.aspx.designer.cs">
       <DependentUpon>DiscrepencyList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StoreSupervisor\ReOrderReport.aspx.cs">
+      <DependentUpon>ReOrderReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StoreSupervisor\ReOrderReport.aspx.designer.cs">
+      <DependentUpon>ReOrderReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StoreSupervisor\TrendAnalysis.aspx.cs">
+      <DependentUpon>TrendAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StoreSupervisor\TrendAnalysis.aspx.designer.cs">
+      <DependentUpon>TrendAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TemplatesWeb\DepartmentEmployee_MobileTemplate.Master.cs">
+      <DependentUpon>DepartmentEmployee_MobileTemplate.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TemplatesWeb\DepartmentEmployee_MobileTemplate.Master.designer.cs">
+      <DependentUpon>DepartmentEmployee_MobileTemplate.Master</DependentUpon>
     </Compile>
     <Compile Include="TemplatesWeb\DepartmentEmployee_Template.Master.cs">
       <DependentUpon>DepartmentEmployee_Template.Master</DependentUpon>
@@ -912,12 +1056,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationLayer\ApplicationLayer.csproj">
-      <Project>{BDE7674D-4312-4582-A503-324C3E30490F}</Project>
-      <Name>ApplicationLayer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="TemplatesWeb\StoreClerk_Template.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -930,6 +1068,10 @@
     <Content Include="TemplatesWeb\StoreSupervisor_Template.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="api\store_supervisor.ashx" />
+    <Content Include="api\mfulfillment.ashx" />
+    <Content Include="api\MDepartmentEmployee.ashx" />
+    <Content Include="api\MDepartmentHead.ashx" />
     <None Include="assets\ckeditor\CHANGES.md" />
     <None Include="assets\ckeditor\LICENSE.md" />
     <None Include="assets\ckeditor\README.md" />
@@ -940,6 +1082,7 @@
     <None Include="assets\jquery-mobile\demos\docs\forms\forms-sample-selfsubmit.php" />
     <None Include="assets\jquery-mobile\demos\docs\pages\dynamic-samples\category.php" />
     <Content Include="packages.config" />
+    <Content Include="TemplatesWeb\DepartmentEmployee_MobileTemplate.Master" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
@@ -952,10 +1095,11 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>46111</DevelopmentServerPort>
+          <DevelopmentServerPort>49461</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/LogicUniversity</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost/LogicUniversity</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

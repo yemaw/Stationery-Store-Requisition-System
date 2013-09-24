@@ -120,7 +120,7 @@ namespace PresentationLayer.DepartmentEmployee
                 stationaryRequests.Quantity = r.quantity;
                 stationaryRequests.SNo = counter;
                 stationaryRequests.StrationeryName = stationeryController.actionGetStationeryByID(r.stationery).stationery_name;
-                stationaryRequests.RequestedDate = r.datetime_requested.ToString();
+                stationaryRequests.RequestedDate = r.datetime_requested.ToString("MMMM dd, yyyy");
                 stationeryRequests.Add(stationaryRequests);
                 counter++;
 
@@ -155,7 +155,7 @@ namespace PresentationLayer.DepartmentEmployee
                 StationaryRequests stationaryRequests = new StationaryRequests();
                 stationaryRequests.Quantity = r.quantity;
                 stationaryRequests.StrationeryName = stationeryController.actionGetStationeryByID(r.stationery).stationery_name;
-                stationaryRequests.RequestedDate = r.datetime_requested.ToString();
+                stationaryRequests.RequestedDate = r.datetime_requested.ToString("MMMM dd, yyyy");
                 stationeryRequests.Add(stationaryRequests);
             }
            
@@ -188,7 +188,7 @@ namespace PresentationLayer.DepartmentEmployee
                  StationaryRequests stationaryRequests = new StationaryRequests();
                  stationaryRequests.Quantity = r.quantity;
                  stationaryRequests.StrationeryName = stationeryController.actionGetStationeryByID(r.stationery).stationery_name;
-                 stationaryRequests.RequestedDate = r.datetime_requested.ToString();
+                 stationaryRequests.RequestedDate = r.datetime_requested.ToString("MMMM dd, yyyy");
                  stationeryRequests.Add(stationaryRequests);
              }
            //  System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approved:" + js.Serialize(stationeryRequests));
@@ -222,7 +222,7 @@ namespace PresentationLayer.DepartmentEmployee
                  StationaryRequests stationaryRequests = new StationaryRequests();
                  stationaryRequests.Quantity = r.quantity;
                  stationaryRequests.StrationeryName = stationeryController.actionGetStationeryByID(r.stationery).stationery_name;
-                 stationaryRequests.RequestedDate = r.datetime_requested.ToString();
+                 stationaryRequests.RequestedDate = r.datetime_requested.ToString("MMMM dd, yyyy");
                  stationeryRequests.Add(stationaryRequests);
              }
              //  System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ approved:" + js.Serialize(stationeryRequests));
@@ -256,8 +256,10 @@ namespace PresentationLayer.DepartmentEmployee
                  StationaryRequests stationaryRequests = new StationaryRequests();
                  stationaryRequests.Quantity = r.quantity;
                  stationaryRequests.StrationeryName = stationeryController.actionGetStationeryByID(r.stationery).stationery_name;
-                 stationaryRequests.RequestedDate = r.datetime_requested.ToString();
+                 stationaryRequests.RequestedDate = r.datetime_requested.ToString("MMMM dd, yyyy");
+                 stationaryRequests.RejectReason = r.reject_remark;
                  stationeryRequests.Add(stationaryRequests);
+                 
              }
               // System.Diagnostics.Debug.WriteLine("check @@@@@@@@@@@@ Rejected:" + js.Serialize(stationeryRequests));
              return js.Serialize(stationeryRequests);
@@ -268,7 +270,9 @@ namespace PresentationLayer.DepartmentEmployee
             private String strationeryName;
            private int quantity;
            private String requestedDate;
+           private String rejectReason;
 
+           public string RejectReason { get; set; }
            public string StrationeryName {
                get { return strationeryName; }
                set { strationeryName = value; }

@@ -114,6 +114,17 @@ namespace PresentationLayer
                 }
             }
 
+            Department department = new DepartmentController().actionGetDepartmentByID(deptId);
+            User head = new UserController().actionGetUserByID(Convert.ToInt32(department.department_head));
+
+            String email_title = "Stationery Requesitions Update Information.";
+            String email_body = "<p>Hello " + head.firstname + " " + head.lastname + ",</p>" +
+                                      "<p>The stationeries requested from "+ department.department_name+ " are distributed " +
+                                      "to " + department.representative_name + ".</p>" +
+                                      "<br />Thank you,<br/> Logic University.<p>This is system generated mail. Please do not reply.</p>";
+            Helper.sendMail(head.email, "no-reply@logic-university.com", email_title, email_body);
+            new SMSController().sendSMS(head.phone_number, "Requested stationeries from " + department.department_name + " are distributed.");
+
             showSuccess(refreshNeed, "Successfully Recorded Distributed Items.");
         }
 
@@ -212,6 +223,7 @@ namespace PresentationLayer
                 Response.Cookies.Add(new HttpCookie("flash_css", "alert alert-success") { Path = "/" });
                 Response.Redirect(Request.RawUrl);
             }
+
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)

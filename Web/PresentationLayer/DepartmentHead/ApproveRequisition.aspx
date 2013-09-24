@@ -99,6 +99,11 @@
 
          $('#rejectButton').click(function () {
              //alert("Reject button is clicked");
+
+
+             var rejectReason = $("#rejectReason").val();
+             $("#rejectModal").modal("hide");
+             //  alert("Reject Reason:" + rejectReason);
              var rejectedRequisitionJSONArray = [];
              if ($('.checkPendingStationary').is(':checked')) {
                  $('.checkPendingStationary').each(function () {
@@ -114,25 +119,21 @@
         {
             type: "POST",
             url: "ApproveRequisition.aspx/rejectRequisitions",
-            data: "{'jsonParam' : " + $.toJSON(rejectedRequisitionJSONArray) + "}",
+            data: "{'jsonParam' : " + $.toJSON(rejectedRequisitionJSONArray) + ",'reason':" + $.toJSON(rejectReason) + "}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: true,
             cache: false,
             success: function (msg) {
                 //DoSomething be a popup or alert to show successful deletion..
-
                 removeRowsFromTable("pendingTable");
                 removeRowsFromTable("rejectedTable");
-
-
-
                 loadAllRejectedRequisitions();
                 loadAllPendingRequisitions();
                 // loadAllApprovedRequisitions();
             }, error: function (x, e) {
                 //$("#error").text("Error occured" + x.responseText);
-                //alert("Error occured" + x.responseText);
+                alert("Error occured" + x.responseText);
             }
             // alert("check point ..after deletion");
         }
@@ -142,7 +143,7 @@
              }
          }); //rejectButton
 
-     });                                 //ready
+     });                                     //ready
      function loadAllPendingRequisitions() {
          $.ajax(
         {
@@ -301,7 +302,10 @@
         <input type="checkbox" id="checkAllPending"/>
         <span style="margin: 0 5px 0 0;">Stationary</span>
         <button class="btn btn-success" style="margin:0 5px;" type="button" id="approveButton">Approve</button>
-        <button class="btn btn-default" style="margin:0 5px;" id="rejectButton" type="button">Reject</button>
+      <!--  <button class="btn btn-default" style="margin:0 5px;" id="rejectButton" type="button">Reject</button>-->
+        <a href="#rejectModal" role="button" class="btn btn-default" style="margin:0 5px;" data-toggle="modal"> Reject </a>
+                  
+
         </td><td class="qty_col">Quantity</td></tr></thead>
          <tbody>
         </tbody>
@@ -323,6 +327,26 @@
 </table>
           </div><!-- rejectedRequisitionTable-->  
        </div>
+       
+       <!-- Reject start -->
+		<div id="rejectModal" class="modal hide fade" tabindex="-1" role="dialog"
+			 aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">x</button>
+				<h3 id="H1">Reject Requisition</h3>
+			</div>
+			<div class="modal-body">
+				<p id="p1">Please provide the reason for rejection.</p>
+                <p><textarea rows="3" cols="20" id="rejectReason"></textarea></p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+				<button class="btn btn-primary" id="rejectButton">Reject</button>
+                 <!--  <button class="btn btn-default" style="margin:0 5px;" id="rejectButton" type="button">Reject</button>-->
+			</div>
+		</div>
+        <!-- Reject Modal end -->
        
  
 </asp:Content>
